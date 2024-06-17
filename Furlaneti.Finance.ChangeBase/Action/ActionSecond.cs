@@ -1,8 +1,6 @@
 ﻿using Furlaneti.Finance.ChangeBase.Model;
-using Furlaneti.Finance.ChangeBase.Data;
 using System.Net.Http.Headers;
 using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Furlaneti.Finance.ChangeBase.Action
 {
@@ -10,6 +8,8 @@ namespace Furlaneti.Finance.ChangeBase.Action
     {
         public static async Task<Active> GetActiveApiAsync(string active)
         {
+            Console.WriteLine("Name active:" + active);
+
             Active activeObj = new Active();
 
             string key = "6c0850e0";
@@ -41,8 +41,7 @@ namespace Furlaneti.Finance.ChangeBase.Action
 
                         JsonElement resultsElementActive = resultsElement.GetProperty(active);
 
-
-                            activeObj = JsonSerializer.Deserialize<Active>(resultsElementActive.GetRawText());
+                        activeObj = JsonSerializer.Deserialize<Active>(resultsElementActive.GetRawText());
 
                         Console.WriteLine("Code active B3:" + active);
 
