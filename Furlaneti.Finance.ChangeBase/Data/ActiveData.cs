@@ -79,13 +79,13 @@ namespace Furlaneti.Finance.ChangeBase.Data
 
                     if (active.MarketTime != null)
                     {
-                        sqlCommand.Parameters.Add("@Equity", SqlDbType.Float).Value = active.Financials.Equity != null ? active.Financials.Equity : 0.00;
+                        sqlCommand.Parameters.Add("@Equity", SqlDbType.BigInt).Value = active.Financials.Equity != null ? active.Financials.Equity : 0;
 
                         sqlCommand.Parameters.Add("@Equity_per_share", SqlDbType.Float).Value = active.Financials.Equity_per_share != null ? active.Financials.Equity_per_share : 0.00;
 
                         sqlCommand.Parameters.Add("@Price_to_book_ratio", SqlDbType.Float).Value = active.Financials.Price_to_book_ratio != null ? active.Financials.Price_to_book_ratio : 0.00;
 
-                        sqlCommand.Parameters.Add("@Quota_count", SqlDbType.Float).Value = active.Financials.Quota_count != null ? active.Financials.Quota_count : 0.00;
+                        sqlCommand.Parameters.Add("@Quota_count", SqlDbType.BigInt).Value = active.Financials.Quota_count != null ? active.Financials.Quota_count : 0;
 
                         sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m != null ? active.Financials.Dividends.Yield_12m : 0.00;
 
@@ -93,12 +93,17 @@ namespace Furlaneti.Finance.ChangeBase.Data
                     }
                     else
                     {
-                        sqlCommand.Parameters.Add("@Quota_count", SqlDbType.Float).Value = 0.00;
+                        sqlCommand.Parameters.Add("@Equity", SqlDbType.BigInt).Value = 0;
+
+                        sqlCommand.Parameters.Add("@Equity_per_share", SqlDbType.Float).Value = 0.00;
+
+                        sqlCommand.Parameters.Add("@Price_to_book_ratio", SqlDbType.Float).Value = 0.00;
+
+                        sqlCommand.Parameters.Add("@Quota_count", SqlDbType.BigInt).Value = 0;
 
                         sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = 0.00;
 
                         sqlCommand.Parameters.Add("@Yield_12m_sum", SqlDbType.Float).Value = 0.00;
-
                     }
 
                     if (active.MarketTime != null)
