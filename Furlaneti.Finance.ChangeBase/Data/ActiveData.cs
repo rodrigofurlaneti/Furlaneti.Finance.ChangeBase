@@ -190,7 +190,7 @@ namespace Furlaneti.Finance.ChangeBase.Data
                     {
                         SqlConnection sqlConnection = new SqlConnection(connectionString);
 
-                        string storedProcedureName = "Finance_Procedure_Active_GetHighB3_Insert";
+                        string storedProcedureName = "Finance_Procedure_Active_Get_High_Low_B3_Insert";
 
                         SqlCommand sqlCommand = new SqlCommand(storedProcedureName, sqlConnection);
 
@@ -338,7 +338,7 @@ namespace Furlaneti.Finance.ChangeBase.Data
                     {
                         SqlConnection sqlConnection = new SqlConnection(connectionString);
 
-                        string storedProcedureName = "Finance_Procedure_Active_GetLowB3_Insert";
+                        string storedProcedureName = "Finance_Procedure_Active_Get_High_Low_B3_Insert";
 
                         SqlCommand sqlCommand = new SqlCommand(storedProcedureName, sqlConnection);
 
