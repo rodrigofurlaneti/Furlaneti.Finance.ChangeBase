@@ -180,6 +180,302 @@ namespace Furlaneti.Finance.ChangeBase.Data
             
         }
 
+        public static void PostActiveGetHighB3(List<Active> listActive)
+        {
+            if (listActive != null)
+            {
+                foreach (var active in listActive)
+                {
+                    if (active.Symbol != String.Empty)
+                    {
+                        SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+                        string storedProcedureName = "Finance_Procedure_Active_GetHighB3_Insert";
+
+                        SqlCommand sqlCommand = new SqlCommand(storedProcedureName, sqlConnection);
+
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        sqlCommand.Parameters.Add("@Kind", SqlDbType.VarChar, 10).Value = active.Kind != null ? active.Kind : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Symbol", SqlDbType.VarChar, 6).Value = active.Symbol != null ? active.Symbol : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Name", SqlDbType.VarChar, 10).Value = active.Name != null ? active.Name : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Company_name", SqlDbType.VarChar, 30).Value = active.CompanyName != null ? active.CompanyName : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Document", SqlDbType.VarChar, 50).Value = active.Document != null ? active.Document : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = active.Description != null ? active.Description : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Website", SqlDbType.VarChar, 50).Value = active.Website != null ? active.Website : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Sector", SqlDbType.VarChar, 50).Value = active.Sector != null ? active.Sector : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Region", SqlDbType.VarChar, 50).Value = active.Region != null ? active.Region : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Currency", SqlDbType.VarChar, 20).Value = active.Currency != null ? active.Currency : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = active.Price != null ? active.Price : 0.00;
+
+                        sqlCommand.Parameters.Add("@Change_price", SqlDbType.Float).Value = active.ChangePrice != null ? active.ChangePrice : 0.00;
+
+                        sqlCommand.Parameters.Add("@Change_percent", SqlDbType.Float).Value = active.ChangePercent != null ? active.ChangePercent : 0.00;
+
+                        sqlCommand.Parameters.Add("@MarketCap", SqlDbType.Float).Value = active.MarketCap != null ? active.MarketCap : 0.00;
+
+                        if (active.MarketTime != null)
+                        {
+                            sqlCommand.Parameters.Add("@Equity", SqlDbType.BigInt).Value = active.Financials.Equity != null ? active.Financials.Equity : 0;
+
+                            sqlCommand.Parameters.Add("@Equity_per_share", SqlDbType.Float).Value = active.Financials.Equity_per_share != null ? active.Financials.Equity_per_share : 0.00;
+
+                            sqlCommand.Parameters.Add("@Price_to_book_ratio", SqlDbType.Float).Value = active.Financials.Price_to_book_ratio != null ? active.Financials.Price_to_book_ratio : 0.00;
+
+                            sqlCommand.Parameters.Add("@Quota_count", SqlDbType.BigInt).Value = active.Financials.Quota_count != null ? active.Financials.Quota_count : 0;
+
+                            sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m != null ? active.Financials.Dividends.Yield_12m : 0.00;
+
+                            sqlCommand.Parameters.Add("@Yield_12m_sum", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m_sum != null ? active.Financials.Dividends.Yield_12m_sum : 0.00;
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.Add("@Equity", SqlDbType.BigInt).Value = 0;
+
+                            sqlCommand.Parameters.Add("@Equity_per_share", SqlDbType.Float).Value = 0.00;
+
+                            sqlCommand.Parameters.Add("@Price_to_book_ratio", SqlDbType.Float).Value = 0.00;
+
+                            sqlCommand.Parameters.Add("@Quota_count", SqlDbType.BigInt).Value = 0;
+
+                            sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = 0.00;
+
+                            sqlCommand.Parameters.Add("@Yield_12m_sum", SqlDbType.Float).Value = 0.00;
+                        }
+
+                        if (active.MarketTime != null)
+                        {
+                            sqlCommand.Parameters.Add("@OpenTime", SqlDbType.VarChar, 5).Value = active.MarketTime.Open != null ? active.MarketTime.Open : "NULL";
+
+                            sqlCommand.Parameters.Add("@CloseTime", SqlDbType.VarChar, 5).Value = active.MarketTime.Close != null ? active.MarketTime.Close : "NULL";
+
+                            sqlCommand.Parameters.Add("@Timezone", SqlDbType.Int).Value = active.MarketTime.Timezone != null ? active.MarketTime.Timezone : 0;
+
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.Add("@OpenTime", SqlDbType.VarChar, 5).Value = "00:00";
+
+                            sqlCommand.Parameters.Add("@CloseTime", SqlDbType.VarChar, 5).Value = "00:00";
+
+                            sqlCommand.Parameters.Add("@Timezone", SqlDbType.Int).Value = 0;
+
+                        }
+
+                        if (active.Logo != null)
+                        {
+                            sqlCommand.Parameters.Add("@Small", SqlDbType.VarChar, 250).Value = active.Logo.Small != null ? active.Logo.Small : string.Empty;
+
+                            sqlCommand.Parameters.Add("@Big", SqlDbType.VarChar, 250).Value = active.Logo.Big != null ? active.Logo.Big : string.Empty;
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.Add("@Small", SqlDbType.VarChar, 250).Value = string.Empty;
+
+                            sqlCommand.Parameters.Add("@Big", SqlDbType.VarChar, 250).Value = string.Empty;
+                        }
+
+
+                        sqlCommand.Parameters.Add("@Updated_at", SqlDbType.VarChar, 50).Value = active.UpdatedAt != null ? active.UpdatedAt : DateTime.Now;
+
+                        SqlParameter outputIdActive = new SqlParameter("@IdActive", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+
+                        sqlCommand.Parameters.Add(outputIdActive);
+
+                        SqlParameter outputReturn = new SqlParameter("@Return", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+
+                        sqlCommand.Parameters.Add(outputReturn);
+
+                        sqlConnection.Open();
+
+                        Thread.Sleep(250);
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        Thread.Sleep(250);
+
+                        sqlConnection.Dispose();
+
+                        Console.WriteLine("Save BD:" + active.Name);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Active symbol empty");
+                    }
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Active null");
+            }
+
+        }
+
+        public static void PostActiveGetLowB3(List<Active> listActive)
+        {
+            if (listActive != null)
+            {
+                foreach (var active in listActive)
+                {
+                    if (active.Symbol != String.Empty)
+                    {
+                        SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+                        string storedProcedureName = "Finance_Procedure_Active_GetLowB3_Insert";
+
+                        SqlCommand sqlCommand = new SqlCommand(storedProcedureName, sqlConnection);
+
+                        sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                        sqlCommand.Parameters.Add("@Kind", SqlDbType.VarChar, 10).Value = active.Kind != null ? active.Kind : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Symbol", SqlDbType.VarChar, 6).Value = active.Symbol != null ? active.Symbol : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Name", SqlDbType.VarChar, 10).Value = active.Name != null ? active.Name : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Company_name", SqlDbType.VarChar, 30).Value = active.CompanyName != null ? active.CompanyName : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Document", SqlDbType.VarChar, 50).Value = active.Document != null ? active.Document : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Description", SqlDbType.VarChar, 50).Value = active.Description != null ? active.Description : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Website", SqlDbType.VarChar, 50).Value = active.Website != null ? active.Website : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Sector", SqlDbType.VarChar, 50).Value = active.Sector != null ? active.Sector : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Region", SqlDbType.VarChar, 50).Value = active.Region != null ? active.Region : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Currency", SqlDbType.VarChar, 20).Value = active.Currency != null ? active.Currency : string.Empty;
+
+                        sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = active.Price != null ? active.Price : 0.00;
+
+                        sqlCommand.Parameters.Add("@Change_price", SqlDbType.Float).Value = active.ChangePrice != null ? active.ChangePrice : 0.00;
+
+                        sqlCommand.Parameters.Add("@Change_percent", SqlDbType.Float).Value = active.ChangePercent != null ? active.ChangePercent : 0.00;
+
+                        sqlCommand.Parameters.Add("@MarketCap", SqlDbType.Float).Value = active.MarketCap != null ? active.MarketCap : 0.00;
+
+                        if (active.MarketTime != null)
+                        {
+                            sqlCommand.Parameters.Add("@Equity", SqlDbType.BigInt).Value = active.Financials.Equity != null ? active.Financials.Equity : 0;
+
+                            sqlCommand.Parameters.Add("@Equity_per_share", SqlDbType.Float).Value = active.Financials.Equity_per_share != null ? active.Financials.Equity_per_share : 0.00;
+
+                            sqlCommand.Parameters.Add("@Price_to_book_ratio", SqlDbType.Float).Value = active.Financials.Price_to_book_ratio != null ? active.Financials.Price_to_book_ratio : 0.00;
+
+                            sqlCommand.Parameters.Add("@Quota_count", SqlDbType.BigInt).Value = active.Financials.Quota_count != null ? active.Financials.Quota_count : 0;
+
+                            sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m != null ? active.Financials.Dividends.Yield_12m : 0.00;
+
+                            sqlCommand.Parameters.Add("@Yield_12m_sum", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m_sum != null ? active.Financials.Dividends.Yield_12m_sum : 0.00;
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.Add("@Equity", SqlDbType.BigInt).Value = 0;
+
+                            sqlCommand.Parameters.Add("@Equity_per_share", SqlDbType.Float).Value = 0.00;
+
+                            sqlCommand.Parameters.Add("@Price_to_book_ratio", SqlDbType.Float).Value = 0.00;
+
+                            sqlCommand.Parameters.Add("@Quota_count", SqlDbType.BigInt).Value = 0;
+
+                            sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = 0.00;
+
+                            sqlCommand.Parameters.Add("@Yield_12m_sum", SqlDbType.Float).Value = 0.00;
+                        }
+
+                        if (active.MarketTime != null)
+                        {
+                            sqlCommand.Parameters.Add("@OpenTime", SqlDbType.VarChar, 5).Value = active.MarketTime.Open != null ? active.MarketTime.Open : "NULL";
+
+                            sqlCommand.Parameters.Add("@CloseTime", SqlDbType.VarChar, 5).Value = active.MarketTime.Close != null ? active.MarketTime.Close : "NULL";
+
+                            sqlCommand.Parameters.Add("@Timezone", SqlDbType.Int).Value = active.MarketTime.Timezone != null ? active.MarketTime.Timezone : 0;
+
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.Add("@OpenTime", SqlDbType.VarChar, 5).Value = "00:00";
+
+                            sqlCommand.Parameters.Add("@CloseTime", SqlDbType.VarChar, 5).Value = "00:00";
+
+                            sqlCommand.Parameters.Add("@Timezone", SqlDbType.Int).Value = 0;
+
+                        }
+
+                        if (active.Logo != null)
+                        {
+                            sqlCommand.Parameters.Add("@Small", SqlDbType.VarChar, 250).Value = active.Logo.Small != null ? active.Logo.Small : string.Empty;
+
+                            sqlCommand.Parameters.Add("@Big", SqlDbType.VarChar, 250).Value = active.Logo.Big != null ? active.Logo.Big : string.Empty;
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.Add("@Small", SqlDbType.VarChar, 250).Value = string.Empty;
+
+                            sqlCommand.Parameters.Add("@Big", SqlDbType.VarChar, 250).Value = string.Empty;
+                        }
+
+
+                        sqlCommand.Parameters.Add("@Updated_at", SqlDbType.VarChar, 50).Value = active.UpdatedAt != null ? active.UpdatedAt : DateTime.Now;
+
+                        SqlParameter outputIdActive = new SqlParameter("@IdActive", SqlDbType.Int)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+
+                        sqlCommand.Parameters.Add(outputIdActive);
+
+                        SqlParameter outputReturn = new SqlParameter("@Return", SqlDbType.Bit)
+                        {
+                            Direction = ParameterDirection.Output
+                        };
+
+                        sqlCommand.Parameters.Add(outputReturn);
+
+                        sqlConnection.Open();
+
+                        Thread.Sleep(250);
+
+                        sqlCommand.ExecuteNonQuery();
+
+                        Thread.Sleep(250);
+
+                        sqlConnection.Dispose();
+
+                        Console.WriteLine("Save BD:" + active.Name);
+                    }
+                    else
+                    {
+                        Console.WriteLine("Active symbol empty");
+                    }
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Active null");
+            }
+
+        }
+
         public static List<CodeActive> GetAllCodeActive()
         {
             List<CodeActive> listCodeActive = new List<CodeActive>();

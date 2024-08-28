@@ -12,5 +12,6 @@ namespace Furlaneti.Finance.ChangeBase.Model
 
         [JsonPropertyName("timezone")]
         public int Timezone { get; set; }
+
     }
 }
