@@ -51,7 +51,7 @@ namespace Furlaneti.Finance.ChangeBase.Data
 
                     sqlCommand.Parameters.Add("@Kind", SqlDbType.VarChar, 10).Value = active.Kind != null ? active.Kind : string.Empty;
 
-                    sqlCommand.Parameters.Add("@Symbol", SqlDbType.VarChar, 5).Value = active.Symbol != null ? active.Symbol : string.Empty;
+                    sqlCommand.Parameters.Add("@Symbol", SqlDbType.VarChar, 6).Value = active.Symbol != null ? active.Symbol : string.Empty;
 
                     sqlCommand.Parameters.Add("@Name", SqlDbType.VarChar, 10).Value = active.Name != null ? active.Name : string.Empty;
 
