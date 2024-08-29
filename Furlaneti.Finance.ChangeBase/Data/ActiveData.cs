@@ -87,9 +87,20 @@ namespace Furlaneti.Finance.ChangeBase.Data
 
                         sqlCommand.Parameters.Add("@Quota_count", SqlDbType.BigInt).Value = active.Financials.Quota_count != null ? active.Financials.Quota_count : 0;
 
-                        sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m != null ? active.Financials.Dividends.Yield_12m : 0.00;
+                        if (active.Financials.Dividends == null)
+                        {
+                            active.Financials.Dividends = new Dividends();
 
-                        sqlCommand.Parameters.Add("@Yield_12m_sum", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m_sum != null ? active.Financials.Dividends.Yield_12m_sum : 0.00;
+                            sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m != null ? active.Financials.Dividends.Yield_12m : 0.00;
+
+                            sqlCommand.Parameters.Add("@Yield_12m_sum", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m_sum != null ? active.Financials.Dividends.Yield_12m_sum : 0.00;
+                        }
+                        else
+                        {
+                            sqlCommand.Parameters.Add("@Yield_12m", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m != null ? active.Financials.Dividends.Yield_12m : 0.00;
+
+                            sqlCommand.Parameters.Add("@Yield_12m_sum", SqlDbType.Float).Value = active.Financials.Dividends.Yield_12m_sum != null ? active.Financials.Dividends.Yield_12m_sum : 0.00;
+                        }
                     }
                     else
                     {
