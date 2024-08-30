@@ -191,6 +191,57 @@ namespace Furlaneti.Finance.ChangeBase.Data
             
         }
 
+        public static void PostActiveValuationIndicators(ValuationIndicators valuationIndicators)
+        {
+            if (valuationIndicators != null)
+            {
+                if (valuationIndicators.Symbol != String.Empty)
+                {
+                    SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+                    string storedProcedureName = "Finance_Procedure_Active_Valuation_Indicators_Insert";
+
+                    SqlCommand sqlCommand = new SqlCommand(storedProcedureName, sqlConnection);
+
+                    sqlCommand.CommandType = CommandType.StoredProcedure;
+
+                    sqlCommand.Parameters.Add("@Symbol", SqlDbType.VarChar, 6).Value = valuationIndicators.Symbol != null ? valuationIndicators.Symbol : string.Empty;
+
+                    sqlCommand.Parameters.Add("@Price", SqlDbType.VarChar, 10).Value = valuationIndicators.Price != null ? valuationIndicators.Price : string.Empty;
+
+                    sqlCommand.Parameters.Add("@DividendYield", SqlDbType.VarChar, 10).Value = valuationIndicators.DividendYield != null ? valuationIndicators.DividendYield : string.Empty;
+
+                    sqlCommand.Parameters.Add("@PriceProfit", SqlDbType.VarChar, 10).Value = valuationIndicators.PriceProfit != null ? valuationIndicators.PriceProfit : string.Empty;
+
+                    sqlCommand.Parameters.Add("@PriceOverAssetValue", SqlDbType.VarChar, 50).Value = valuationIndicators.PriceOverAssetValue != null ? valuationIndicators.PriceOverAssetValue : string.Empty;
+
+                    sqlCommand.Parameters.Add("@ReturnOnEquity", SqlDbType.VarChar, 50).Value = valuationIndicators.ReturnOnEquity != null ? valuationIndicators.ReturnOnEquity : string.Empty;
+
+                    sqlConnection.Open();
+
+                    Thread.Sleep(250);
+
+                    sqlCommand.ExecuteNonQuery();
+
+                    Thread.Sleep(250);
+
+                    sqlConnection.Dispose();
+
+                    Console.WriteLine("Save BD Valuation Indicators:" + valuationIndicators.Symbol);
+                }
+                else
+                {
+                    Console.WriteLine("Active symbol empty Valuation Indicators");
+                }
+
+            }
+            else
+            {
+                Console.WriteLine("Active Valuation Indicators null");
+            }
+
+        }
+
         public static void PostActiveGetHighB3(List<Active> listActive)
         {
             if (listActive != null)

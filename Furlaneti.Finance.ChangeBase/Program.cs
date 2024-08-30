@@ -7,7 +7,7 @@ namespace HttpClientExample
     {
         static async Task Main(string[] args)
         {
-            //Consulta no banco o nome dos ativos
+            ////Consulta no banco o nome dos ativos
             var listCodeActive = ActiveData.GetAllCodeActive();
 
             foreach (var code in listCodeActive)
@@ -32,6 +32,14 @@ namespace HttpClientExample
 
             //Inserir na tabela Ativo Get High B3
             ActiveData.PostActiveGetLowB3(listActiveGetLowB3);
+
+            //Consulta os dados do site "status invest"
+            foreach (var code in listCodeActive)
+            {
+                //Consulta na api os dados do ativo
+                await ActionFive.ExtractWebsiteDataAsync(code.NameActive);
+            }
+
         }
     }
 }
