@@ -51,7 +51,7 @@ namespace Furlaneti.Finance.ChangeBase.Action
                             {
                                 string valorAtualValue = valorAtualNode.InnerText.Trim();
                                 Console.WriteLine($"Valor atual da ação: {valorAtualValue}");
-                                valuationIndicators.Price = valorAtualValue;
+                                valuationIndicators.Price = Convert.ToDecimal(valorAtualValue);
                             }
                             else
                             {
@@ -64,8 +64,18 @@ namespace Furlaneti.Finance.ChangeBase.Action
                             if (dyNode != null)
                             {
                                 string dyValue = dyNode.InnerText.Trim();
-                                Console.WriteLine($"Valor D.Y: {dyValue}");
-                                valuationIndicators.DividendYield = dyValue;
+
+                                if (dyValue.Equals("-%"))
+                                {
+                                    dyValue = "0.00";
+                                    Console.WriteLine($"Valor D.Y: {dyValue}");
+                                    valuationIndicators.DividendYield = Convert.ToDecimal(dyValue);
+                                }
+                                else if (dyValue.Contains("%"))
+                                {
+                                    Console.WriteLine($"Valor D.Y: {dyValue}");
+                                    valuationIndicators.DividendYield = Convert.ToDecimal(dyValue.Replace("%",""));
+                                }
                             }
                             else
                             {
@@ -79,7 +89,7 @@ namespace Furlaneti.Finance.ChangeBase.Action
                             {
                                 string plValue = plNode.InnerText.Trim();
                                 Console.WriteLine($"Valor P/L: {plValue}");
-                                valuationIndicators.PriceProfit = plValue;
+                                valuationIndicators.PriceProfit = Convert.ToDecimal(plValue);
                             }
                             else
                             {
@@ -93,7 +103,7 @@ namespace Furlaneti.Finance.ChangeBase.Action
                             {
                                 string pvpValue = pvpNode.InnerText.Trim();
                                 Console.WriteLine($"Valor P/VP: {pvpValue}");
-                                valuationIndicators.PriceOverAssetValue = pvpValue;
+                                valuationIndicators.PriceOverAssetValue = Convert.ToDecimal(pvpValue);
                             }
                             else
                             {
@@ -106,8 +116,13 @@ namespace Furlaneti.Finance.ChangeBase.Action
                             if (roeNode != null)
                             {
                                 string roeValue = roeNode.InnerText.Trim();
-                                Console.WriteLine($"Valor ROE: {roeValue}");
-                                valuationIndicators.ReturnOnEquity = roeValue;
+
+                                if (roeValue.Contains("%"))
+                                {
+                                    Console.WriteLine($"Valor ROE: {roeValue}");
+                                    valuationIndicators.ReturnOnEquity = Convert.ToDecimal(roeValue.Replace("%",""));
+                                }
+
                             }
                             else
                             {

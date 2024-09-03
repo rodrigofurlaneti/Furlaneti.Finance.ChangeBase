@@ -7,7 +7,7 @@ namespace HttpClientExample
     {
         static async Task Main(string[] args)
         {
-            ////Consulta no banco o nome dos ativos
+            //Consulta no banco o nome dos ativos
             var listCodeActive = ActiveData.GetAllCodeActive();
 
             foreach (var code in listCodeActive)

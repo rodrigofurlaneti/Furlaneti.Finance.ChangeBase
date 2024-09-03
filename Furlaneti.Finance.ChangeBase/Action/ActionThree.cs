@@ -78,12 +78,12 @@ namespace Furlaneti.Finance.ChangeBase.Action
                                     Open = activeElement.GetProperty("market_time").GetProperty("open").GetString(),
                                     Close = activeElement.GetProperty("market_time").GetProperty("close").GetString(),
                                     Timezone = activeElement.GetProperty("market_time").GetProperty("timezone").GetInt32()
-                                },
-                                Logo = new Logo
-                                {
-                                    Small = activeElement.GetProperty("logo").GetProperty("small").GetString(),
-                                    Big = activeElement.GetProperty("logo").GetProperty("big").GetString()
                                 }
+                                //Logo = new Logo
+                                //{
+                                //    Small = activeElement.GetProperty("logo").GetProperty("small").GetString(),
+                                //    Big = activeElement.GetProperty("logo").GetProperty("big").GetString()
+                                //}
                             };
 
                             activeList.Add(active);

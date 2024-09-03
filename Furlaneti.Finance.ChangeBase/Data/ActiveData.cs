@@ -207,15 +207,15 @@ namespace Furlaneti.Finance.ChangeBase.Data
 
                     sqlCommand.Parameters.Add("@Symbol", SqlDbType.VarChar, 6).Value = valuationIndicators.Symbol != null ? valuationIndicators.Symbol : string.Empty;
 
-                    sqlCommand.Parameters.Add("@Price", SqlDbType.VarChar, 10).Value = valuationIndicators.Price != null ? valuationIndicators.Price : string.Empty;
+                    sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = valuationIndicators.Price != null ? valuationIndicators.Price : string.Empty;
 
-                    sqlCommand.Parameters.Add("@DividendYield", SqlDbType.VarChar, 10).Value = valuationIndicators.DividendYield != null ? valuationIndicators.DividendYield : string.Empty;
+                    sqlCommand.Parameters.Add("@DividendYield", SqlDbType.Float).Value = valuationIndicators.DividendYield != null ? valuationIndicators.DividendYield : string.Empty;
 
-                    sqlCommand.Parameters.Add("@PriceProfit", SqlDbType.VarChar, 10).Value = valuationIndicators.PriceProfit != null ? valuationIndicators.PriceProfit : string.Empty;
+                    sqlCommand.Parameters.Add("@PriceProfit", SqlDbType.Float).Value = valuationIndicators.PriceProfit != null ? valuationIndicators.PriceProfit : string.Empty;
 
-                    sqlCommand.Parameters.Add("@PriceOverAssetValue", SqlDbType.VarChar, 50).Value = valuationIndicators.PriceOverAssetValue != null ? valuationIndicators.PriceOverAssetValue : string.Empty;
+                    sqlCommand.Parameters.Add("@PriceOverAssetValue", SqlDbType.Float).Value = valuationIndicators.PriceOverAssetValue != null ? valuationIndicators.PriceOverAssetValue : string.Empty;
 
-                    sqlCommand.Parameters.Add("@ReturnOnEquity", SqlDbType.VarChar, 50).Value = valuationIndicators.ReturnOnEquity != null ? valuationIndicators.ReturnOnEquity : string.Empty;
+                    sqlCommand.Parameters.Add("@ReturnOnEquity", SqlDbType.Float).Value = valuationIndicators.ReturnOnEquity != null ? valuationIndicators.ReturnOnEquity : string.Empty;
 
                     sqlConnection.Open();
 
