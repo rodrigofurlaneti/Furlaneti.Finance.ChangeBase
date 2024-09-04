@@ -221,6 +221,10 @@ namespace Furlaneti.Finance.ChangeBase.Data
 
                     sqlCommand.Parameters.Add("@CompoundAnnualGrowthRate", SqlDbType.Float).Value = valuationIndicators.CompoundAnnualGrowthRate != null ? valuationIndicators.CompoundAnnualGrowthRate : string.Empty;
 
+                    sqlCommand.Parameters.Add("@EarningsPerShare", SqlDbType.Float).Value = valuationIndicators.EarningsPerShare != null ? valuationIndicators.EarningsPerShare : string.Empty;
+
+                    sqlCommand.Parameters.Add("@EquityValuePerShare", SqlDbType.Float).Value = valuationIndicators.EquityValuePerShare != null ? valuationIndicators.EquityValuePerShare : string.Empty;
+
                     sqlCommand.Parameters.Add("@ReturnOnEquity", SqlDbType.Float).Value = valuationIndicators.ReturnOnEquity != null ? valuationIndicators.ReturnOnEquity : string.Empty;
 
                     sqlConnection.Open();

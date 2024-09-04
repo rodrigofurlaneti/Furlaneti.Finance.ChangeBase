@@ -11,5 +11,8 @@
         public decimal ReturnOnEquity { get; set; }
         public decimal DlEbitda { get; set; }
         public decimal CompoundAnnualGrowthRate { get; set; }
+        public decimal EarningsPerShare { get; set; }
+        public decimal EquityValuePerShare { get; set; }
+
     }
 }

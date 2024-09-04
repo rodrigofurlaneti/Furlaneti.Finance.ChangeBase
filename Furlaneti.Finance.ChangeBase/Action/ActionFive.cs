@@ -201,7 +201,35 @@ namespace Furlaneti.Finance.ChangeBase.Action
                                 Console.WriteLine("Valor ROE não encontrado.");
                             }
 
-                            ActiveData.PostActiveValuationIndicators(valuationIndicators);
+                        // Encontra o valor LPA que está dentro do <strong> após o texto "LPA"
+                        var lpaNode = doc.DocumentNode.SelectSingleNode("//h3[text()='LPA']/following::strong[@class='value d-block lh-4 fs-4 fw-700']");
+
+                        if (lpaNode != null)
+                        {
+                            string lpaValue = lpaNode.InnerText.Trim();
+                            Console.WriteLine($"Valor LPA: {lpaValue}");
+                            valuationIndicators.EarningsPerShare = Convert.ToDecimal(lpaValue);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Valor LPA não encontrado.");
+                        }
+
+                        // Encontra o valor VPA que está dentro do <strong> após o texto "VPA"
+                        var vpaNode = doc.DocumentNode.SelectSingleNode("//h3[text()='VPA']/following::strong[@class='value d-block lh-4 fs-4 fw-700']");
+
+                        if (vpaNode != null)
+                        {
+                            string vpaValue = vpaNode.InnerText.Trim();
+                            Console.WriteLine($"Valor VPA: {vpaValue}");
+                            valuationIndicators.EquityValuePerShare = Convert.ToDecimal(vpaValue);
+                        }
+                        else
+                        {
+                            Console.WriteLine("Valor VPA não encontrado.");
+                        }
+
+                        ActiveData.PostActiveValuationIndicators(valuationIndicators);
 
                         }
                         else
