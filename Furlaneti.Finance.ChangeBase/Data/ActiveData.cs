@@ -209,11 +209,17 @@ namespace Furlaneti.Finance.ChangeBase.Data
 
                     sqlCommand.Parameters.Add("@Price", SqlDbType.Float).Value = valuationIndicators.Price != null ? valuationIndicators.Price : string.Empty;
 
+                    sqlCommand.Parameters.Add("@EvEbitda", SqlDbType.Float).Value = valuationIndicators.EvEbitda != null ? valuationIndicators.EvEbitda : string.Empty;
+
                     sqlCommand.Parameters.Add("@DividendYield", SqlDbType.Float).Value = valuationIndicators.DividendYield != null ? valuationIndicators.DividendYield : string.Empty;
 
                     sqlCommand.Parameters.Add("@PriceProfit", SqlDbType.Float).Value = valuationIndicators.PriceProfit != null ? valuationIndicators.PriceProfit : string.Empty;
 
                     sqlCommand.Parameters.Add("@PriceOverAssetValue", SqlDbType.Float).Value = valuationIndicators.PriceOverAssetValue != null ? valuationIndicators.PriceOverAssetValue : string.Empty;
+
+                    sqlCommand.Parameters.Add("@DlEbitda", SqlDbType.Float).Value = valuationIndicators.DlEbitda != null ? valuationIndicators.DlEbitda : string.Empty;
+
+                    sqlCommand.Parameters.Add("@CompoundAnnualGrowthRate", SqlDbType.Float).Value = valuationIndicators.CompoundAnnualGrowthRate != null ? valuationIndicators.CompoundAnnualGrowthRate : string.Empty;
 
                     sqlCommand.Parameters.Add("@ReturnOnEquity", SqlDbType.Float).Value = valuationIndicators.ReturnOnEquity != null ? valuationIndicators.ReturnOnEquity : string.Empty;
 

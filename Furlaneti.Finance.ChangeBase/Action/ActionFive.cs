@@ -82,8 +82,80 @@ namespace Furlaneti.Finance.ChangeBase.Action
                                 Console.WriteLine("Valor P/L não encontrado.");
                             }
 
-                            // Encontra o valor do PriceProfit que está dentro do <strong> após o texto "P/L"
-                            var plNode = doc.DocumentNode.SelectSingleNode("//h3[text()='P/L']/following::strong[@class='value d-block lh-4 fs-4 fw-700']");
+                        // Encontra o valor do Ev Ebitda que está dentro do <strong> após o texto "Ev Ebitda"                    value d-block lh-4 fs-4 fw-700
+                        var evEbitdaNode = doc.DocumentNode.SelectSingleNode("//h3[text()='EV/EBITDA']/following::strong[@class='value d-block lh-4 fs-4 fw-700']");
+
+                        if (evEbitdaNode != null)
+                        {
+                            string evEbitdaValue = evEbitdaNode.InnerText.Trim();
+                            if (evEbitdaValue.Equals("-"))
+                            {
+                                evEbitdaValue = "0.00";
+                                Console.WriteLine($"Valor Ev Ebitda: {evEbitdaValue}");
+                                valuationIndicators.EvEbitda = Convert.ToDecimal(evEbitdaValue);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Valor Ev Ebitda: {evEbitdaValue}");
+                                valuationIndicators.EvEbitda = Convert.ToDecimal(evEbitdaValue);
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Valor Ev Ebitda não encontrado.");
+                        }
+
+                        // Encontra o valor do Dív. líquida/EBITDA que está dentro do <strong> após o texto "Dív. líquida/EBITDA"
+                        var dlEbitdaNode = doc.DocumentNode.SelectSingleNode("//h3[text()='D&#xED;v. l&#xED;quida/EBITDA']/following::strong[@class='value d-block lh-4 fs-4 fw-700']");
+
+                        if (dlEbitdaNode != null)
+                        {
+                            string dlEbitdaValue = dlEbitdaNode.InnerText.Trim();
+
+                            if (dlEbitdaValue.Equals("-%"))
+                            {
+                                dlEbitdaValue = "0.00";
+                                Console.WriteLine($"Valor Dív. líquida/EBITDA: {dlEbitdaValue}");
+                                valuationIndicators.DlEbitda = Convert.ToDecimal(dlEbitdaValue);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Valor Dív. líquida/EBITDA: {dlEbitdaValue.Replace("%","")}");
+                                valuationIndicators.DlEbitda = Convert.ToDecimal(dlEbitdaValue.Replace("%", ""));
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Valor Dl Ebitda não encontrado.");
+                        }
+
+                        //CompoundAnnualGrowthRate
+                        // Encontra o valor do Cagr lucro que está dentro do <strong> após o texto "CAGR Lucros 5 anos"
+                        var growthRateNode = doc.DocumentNode.SelectSingleNode("//h3[text()='CAGR Lucros 5 anos']/following::strong[@class='value d-block lh-4 fs-4 fw-700']");
+
+                        if (growthRateNode != null)
+                        {
+                            string growthRateValue = growthRateNode.InnerText.Trim();
+
+                            if (growthRateValue.Equals("-%"))
+                            {
+                                growthRateValue = "0.00";
+                                Console.WriteLine($"Valor Cagr Lucro: {growthRateValue}");
+                                valuationIndicators.CompoundAnnualGrowthRate = Convert.ToDecimal(growthRateValue);
+                            }
+                            else
+                            {
+                                Console.WriteLine($"Valor Cagr Lucro: {growthRateValue.Replace("%", "")}");
+                                valuationIndicators.CompoundAnnualGrowthRate = Convert.ToDecimal(growthRateValue.Replace("%", ""));
+                            }
+                        }
+                        else
+                        {
+                            Console.WriteLine("Valor Cagr Lucro não encontrado.");
+                        }
+
+                        // Encontra o valor do PriceProfit que está dentro do <strong> após o texto "P/L"
+                        var plNode = doc.DocumentNode.SelectSingleNode("//h3[text()='P/L']/following::strong[@class='value d-block lh-4 fs-4 fw-700']");
                             
                             if (plNode != null)
                             {
